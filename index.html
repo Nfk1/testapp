@@ -35,13 +35,12 @@
         }
     </script>
     <style>
-       html, body {
-  background-color: #ffffff; /* белый фон */
+  html, body {
+  background-color: #ffffff;
   margin: 0;
   box-sizing: border-box;
-
-  padding-top: env(safe-area-inset-top); /* отступ под статус-бар на iPhone с вырезом */
-  height: 100%;
+  height: calc(100% - env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
 }
 
     </style>
@@ -101,6 +100,7 @@
     </script>
 </body>
 </html>
+
 
 
 
