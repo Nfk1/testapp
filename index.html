@@ -1,93 +1,97 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Push уведомления с OneSignal</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Push уведомления с OneSignal</title>
 
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#0a84ff" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0a84ff" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 
-  <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function (OneSignal) {
-      await OneSignal.init({
-        appId: "77aceda5-fe75-43ff-931c-605854920e20",
-        notifyButton: {
-          enable: true, // Показывать кнопку подписки автоматически
-        },
-        allowLocalhostAsSecureOrigin: true, // Для локальной разработки
-      });
-    });
-  </script>
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function (OneSignal) {
+            try {
+                await OneSignal.init({
+                    appId: "77aceda5-fe75-43ff-931c-605854920e20",
+                    notifyButton: {
+                        enable: true, // Показывать кнопку подписки автоматически
+                    },
+                    allowLocalhostAsSecureOrigin: true, // Для локальной разработки
+                });
+            } catch (error) {
+                console.error("Ошибка инициализации OneSignal:", error);
+            }
+        });
+    </script>
 
-  <script>
-    // Регистрируем service worker вручную (если он у вас есть)
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then(() => console.log("Service Worker зарегистрирован"))
-        .catch((err) => console.error("Ошибка регистрации service worker:", err));
-    }
-  </script>
+    <script>
+        // Регистрируем service worker вручную
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+                .register("/service-worker.js")
+                .then(() => console.log("Service Worker зарегистрирован"))
+                .catch((err) => console.error("Ошибка регистрации service worker:", err));
+        }
+    </script>
 </head>
 <body>
-  <h1>Пример push-уведомлений с OneSignal</h1>
+    <h1>Пример push-уведомлений с OneSignal</h1>
 
-  <button id="subscribeBtn">Подписаться на уведомления</button>
+    <button id="subscribeBtn">Подписаться на уведомления</button>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const button = document.getElementById("subscribeBtn");
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById("subscribeBtn");
 
-      button.addEventListener("click", async () => {
-        try {
-          // Ждем инициализации OneSignal
-          await OneSignal.isInitialized();
-          
-          // Проверяем, разрешены ли уведомления
-          if (!("Notification" in window)) {
-            alert("Ваш браузер не поддерживает Notification API");
-            return;
-          }
+            button.addEventListener("click", async () => {
+                try {
+                    // Ждем инициализации OneSignal
+                    await OneSignal.isInitialized();
 
-          // Спрашиваем разрешение на уведомления
-          const permission = await Notification.requestPermission();
-          if (permission !== 'granted') {
-            alert('Пожалуйста, разрешите отправку уведомлений');
-            return;
-          }
+                    // Проверяем, разрешены ли уведомления
+                    if (!("Notification" in window)) {
+                        alert("Ваш браузер не поддерживает Notification API");
+                        return;
+                    }
 
-          // Регистрируемся на push-уведомления
-          await OneSignal.registerForPushNotifications();
+                    // Спрашиваем разрешение на уведомления
+                    const permission = await Notification.requestPermission();
+                    if (permission !== 'granted') {
+                        alert('Пожалуйста, разрешите отправку уведомлений');
+                        return;
+                    }
 
-          alert("Подписка успешна! Сейчас начнутся уведомления.");
+                    // Регистрируемся на push-уведомления
+                    await OneSignal.registerForPushNotifications();
 
-          let count = 0;
-          const maxCount = 3;
-          const intervalId = setInterval(() => {
-            count++;
-            new Notification("Тестовое уведомление", {
-              body: `Это уведомление номер ${count}`,
-              icon: "https://onesignal.com/images/notification_logo.png",
+                    alert("Подписка успешна! Сейчас начнутся уведомления.");
+
+                    let count = 0;
+                    const maxCount = 3;
+                    const intervalId = setInterval(() => {
+                        count++;
+                        new Notification("Тестовое уведомление", {
+                            body: `Это уведомление номер ${count}`,
+                            icon: "https://onesignal.com/images/notification_logo.png",
+                        });
+
+                        if (count >= maxCount) {
+                            clearInterval(intervalId);
+                            alert("Все уведомления отправлены.");
+                        }
+                    }, 10000);
+                } catch (error) {
+                    console.error("Ошибка подписки на уведомления:", error);
+                    alert("Не удалось подписаться на уведомления");
+                }
             });
-
-            if (count >= maxCount) {
-              clearInterval(intervalId);
-              alert("Все уведомления отправлены.");
-            }
-          }, 10000);
-        } catch (error) {
-          console.error("Ошибка подписки на уведомления:", error);
-          alert("Не удалось подписаться на уведомления");
-        }
-      });
-    });
-  </script>
+        });
+    </script>
 </body>
 </html>
