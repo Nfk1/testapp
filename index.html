@@ -11,24 +11,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-
-    <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function (OneSignal) {
-            try {
-                await OneSignal.init({
-                    appId: "77aceda5-fe75-43ff-931c-605854920e20",
-                    notifyButton: {
-                        enable: true, // Показывать кнопку подписки автоматически
-                    },
-                    allowLocalhostAsSecureOrigin: true, // Для локальной разработки
-                });
-            } catch (error) {
-                console.error("Ошибка инициализации OneSignal:", error);
-            }
-        });
-    </script>
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "77aceda5-fe75-43ff-931c-605854920e20",
+    });
+  });
+</script>
 
     <script>
         // Регистрируем service worker вручную
@@ -95,3 +86,4 @@
     </script>
 </body>
 </html>
+
