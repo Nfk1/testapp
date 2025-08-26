@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="theme-color" content="#0a84ff" />
+    <meta name="theme-color" content="#ffffff" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -35,11 +35,13 @@
         }
     </script>
     <style>
-        body{
-            width:100vw;
-            height:100vh;
-            padding-top: env(safe-area-inset-top);
-        }
+       html, body {
+  background-color: #ffffff; /* белый фон */
+  margin: 0;
+  padding-top: env(safe-area-inset-top); /* отступ под статус-бар на iPhone с вырезом */
+  height: 100%;
+}
+
     </style>
 </head>
 <body>
@@ -97,6 +99,7 @@
     </script>
 </body>
 </html>
+
 
 
 
