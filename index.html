@@ -42,19 +42,31 @@
   <button id="subscribeBtn">Подписаться на уведомления</button>
 
   <script>
-    const button = document.getElementById("subscribeBtn");
+    document.addEventListener('DOMContentLoaded', () => {
+      const button = document.getElementById("subscribeBtn");
 
-    button.addEventListener("click", () => {
-      OneSignal.push(async function () {
+      button.addEventListener("click", async () => {
         try {
-          await OneSignal.registerForPushNotifications();
-
-          alert("Подписка успешна! Сейчас начнутся уведомления.");
-
+          // Ждем инициализации OneSignal
+          await OneSignal.isInitialized();
+          
+          // Проверяем, разрешены ли уведомления
           if (!("Notification" in window)) {
             alert("Ваш браузер не поддерживает Notification API");
             return;
           }
+
+          // Спрашиваем разрешение на уведомления
+          const permission = await Notification.requestPermission();
+          if (permission !== 'granted') {
+            alert('Пожалуйста, разрешите отправку уведомлений');
+            return;
+          }
+
+          // Регистрируемся на push-уведомления
+          await OneSignal.registerForPushNotifications();
+
+          alert("Подписка успешна! Сейчас начнутся уведомления.");
 
           let count = 0;
           const maxCount = 3;
