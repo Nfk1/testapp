@@ -11,8 +11,26 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
 	<script src="script.js"></script>
 	<script src="service-worker.js"></script>
+	<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "77aceda5-fe75-43ff-931c-605854920e20",
+    });
+  });
+</script>
 </head>
 <body>
 	<h1>пипипи</h1>
+	<button id="subscribeBtn">Подписаться на уведомления</button>
+	<script>
+  document.getElementById('subscribeBtn').addEventListener('click', function() {
+    OneSignal.push(function() {
+      OneSignal.registerForPushNotifications();
+    });
+  });
+</script>
 </body>
+
 </html>
