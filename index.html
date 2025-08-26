@@ -30,7 +30,30 @@
       OneSignal.registerForPushNotifications();
     });
   });
+		 document.getElementById('subscribeBtn').addEventListener('click', function() {
+    OneSignal.push(async function() {
+      await OneSignal.registerForPushNotifications();
+
+      alert('Подписка успешна! Сейчас начнутся уведомления.');
+
+      // Запускаем локальную симуляцию уведомлений с интервалом 10 секунд 3 раза
+      let count = 0;
+      const maxCount = 3;
+      const intervalId = setInterval(() => {
+        count++;
+        new Notification("Тестовое уведомление", {
+          body: Это уведомление номер ${count},
+          icon: 'https://onesignal.com/images/notification_logo.png'
+        });
+        if (count >= maxCount) {
+          clearInterval(intervalId);
+          alert('Все уведомления отправлены.');
+        }
+      }, 10000);
+    });
+  });
 </script>
 </body>
 
 </html>
+
