@@ -150,7 +150,10 @@ img {
           } else {
             // Убираем мигающий курсор, когда текст напечатан
             textElem.style.borderRight = "none";
-            window.location.href = '/testapp/regist.html';
+            setTimeout(() => {
+                window.location.href = '/testapp/regist.html';
+            }, 2000);
+          \
           }
         }
         typeNextLetter();
@@ -158,6 +161,7 @@ img {
     </script>
 </body>
 </html>
+
 
 
 
