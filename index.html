@@ -24,12 +24,15 @@
     }
   </script>
     <style>
-      html, body {
- 
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-  background-color: #010d7a; /* тот же цвет, что и основного фона */
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #010d7a;
+  box-sizing: border-box;
+}
 
+/* Для iOS safe area */
 @supports(padding: env(safe-area-inset-top)) {
   body {
     padding-top: env(safe-area-inset-top);
@@ -39,15 +42,18 @@
     background-color: #010d7a;
   }
 }
-        *{
+
+* {
   margin: 0;
   padding: 0;
 }
+
 .welcome {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  /* Учитываем safe area сверху и снизу */
+  height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   gap: 20px;
   background-color: #010d7a;
   font-family: Arial, sans-serif;
@@ -62,12 +68,13 @@ img {
   min-width: 50px;
   object-fit: contain;
 }
-  @media (max-width: 768px) {
+
+@media (max-width: 768px) {
   img {
-    width:50vw;
-    height:auto;
+    width: 50vw;
+    height: auto;
     max-width: 100px; /* отменяем max-width 200px */
-    object-fit:contain;
+    object-fit: contain;
   }
 }
 
@@ -75,6 +82,7 @@ img {
 .rotate {
   animation: rotate360 2s forwards;
 }
+
 @keyframes rotate360 {
   from {
     transform: rotate(0deg);
@@ -89,7 +97,7 @@ img {
 #text {
   white-space: nowrap;
   min-width: 100px;
-  height: auto; /* пусть высота подстраивается */
+  height: auto;
   overflow: hidden;
   border-right: 2px solid black; /* курсор-полоса */
   animation: blink 0.7s steps(2) infinite;
@@ -98,7 +106,7 @@ img {
     10vw,
     9rem
   ); /* адаптивный размер от 3rem до 10rem, зависящий от ширины окна */
-  font-weight: bold; /* жирный текст */
+  font-weight: bold;
   line-height: 1;
   max-height: 12rem;
   display: flex;
@@ -106,8 +114,7 @@ img {
 }
 
 @keyframes blink {
-  0%,
-  100% {
+  0%, 100% {
     border-color: transparent;
   }
 
@@ -115,6 +122,7 @@ img {
     border-color: black;
   }
 }
+
 
     </style>
 </head>
@@ -150,6 +158,7 @@ img {
     </script>
 </body>
 </html>
+
 
 
 
