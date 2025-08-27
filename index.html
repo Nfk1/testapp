@@ -25,14 +25,17 @@
   </script>
     <style>
       html, body {
-  
+ 
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   background-color: #010d7a; /* тот же цвет, что и основного фона */
 
-  /* Для iOS 11+ safe area */
-@supports(padding: max(env(safe-area-inset-top), 0)) {
+@supports(padding: env(safe-area-inset-top)) {
   body {
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
     background-color: #010d7a;
   }
 }
@@ -120,7 +123,6 @@ img {
       <img id="logo" src="logo-welcom.png" alt="логотип" />
       <div id="text"></div>
     </div>
-    </script>
 
     <script>
       const logo = document.getElementById("logo");
