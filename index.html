@@ -26,9 +26,13 @@
   
   background-color: #010d7a; /* тот же цвет, что и основного фона */
 
-  /* Поддержка safe area для iOS */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  /* Для iOS 11+ safe area */
+@supports(padding: max(env(safe-area-inset-top), 0)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    background-color: #010d7a;
+  }
 }
         *{
   margin: 0;
@@ -142,6 +146,7 @@ img {
     </script>
 </body>
 </html>
+
 
 
 
