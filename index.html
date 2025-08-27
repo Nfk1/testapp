@@ -119,7 +119,7 @@ img {
   }
 
   50% {
-    border-color: black;
+    border-color: white;
   }
 }
 
@@ -146,7 +146,7 @@ img {
           if (index < text.length) {
             textElem.textContent += text[index];
             index++;
-            setTimeout(typeNextLetter, 300); // скорость печати: 300мс на букву
+            setTimeout(typeNextLetter, 200); // скорость печати: 300мс на букву
           } else {
             // Убираем мигающий курсор, когда текст напечатан
             textElem.style.borderRight = "none";
@@ -157,6 +157,7 @@ img {
     </script>
 </body>
 </html>
+
 
 
 
