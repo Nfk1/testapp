@@ -2,7 +2,6 @@
   "name": "My App",
   "short_name": "App",
   "start_url": "/index.html",
-  "scope": "/",
   "display": "standalone",
   "background_color": "#010d7a",
   "theme_color": "#010d7a",
@@ -19,5 +18,6 @@
     }
   ]
 }
+
 
 
