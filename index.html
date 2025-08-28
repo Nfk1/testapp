@@ -30,6 +30,9 @@
   height: 100%;
   background-color: #010d7a;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Для iOS safe area */
@@ -53,7 +56,7 @@
   align-items: center;
   justify-content: center;
   /* Учитываем safe area сверху и снизу */
-  height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  height: calc(10vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   gap: 20px;
   background-color: #010d7a;
   font-family: Arial, sans-serif;
@@ -157,6 +160,7 @@ img {
     </script>
 </body>
 </html>
+
 
 
 
