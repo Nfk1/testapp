@@ -24,8 +24,24 @@
   margin:0;
   padding:0;
 }
+    
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+
+          transform: translateY(-200%);
+          transform: translateX(-200%);
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 1s ease forwards;
+      }
 .back {
-  background: linear-gradient(270deg, #010d7a, #3a44a6, #5c7ef5, #3a44a6, #010d7a);
+ background: #010d7a;
   background-size: 1000% 1000%;
   animation: smoothGradient 20s ease infinite;
 
@@ -34,17 +50,7 @@
   height: 100%;
 }
 
-@keyframes smoothGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+
 .registration-form {
   width: 400px;
   position: absolute;
@@ -231,7 +237,7 @@
 </head>
 <body>
 <div class="back">
-  <div class="registration-form">
+  <div class="registration-form fade-in-up">
     <header>
       <h1>Sign Up</h1>
       <p>Fill in all informations</p>
@@ -386,6 +392,7 @@ $(function () {
 </body>
 
 </html>
+
 
 
 
