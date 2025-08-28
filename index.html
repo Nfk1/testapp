@@ -135,10 +135,35 @@ img {
     </div>
 
     <script>
+      let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Предотвращаем автоматическое показ окна
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Показываем кнопку установки
+  const btn = document.getElementById('btnInstall');
+  btn.style.display = 'block';
+
+  btn.addEventListener('click', async () => {
+    btn.style.display = 'none';
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      console.log('Пользователь согласился установить приложение');
+    } else {
+      console.log('Пользователь отклонил установку');
+    }
+    deferredPrompt = null;
+  });
+});
+
       const logo = document.getElementById("logo");
       const textElem = document.getElementById("text");
       const text = "VUKA";
       let index = 0;
+<button id="btnInstall" style="display:none;">Установить приложение</button>
 
       // Запускаем анимацию вращения
       logo.classList.add("rotate");
@@ -163,6 +188,7 @@ img {
     </script>
 </body>
 </html>
+
 
 
 
