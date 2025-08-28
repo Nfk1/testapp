@@ -149,10 +149,13 @@ img {
           if (index < text.length) {
             textElem.textContent += text[index];
             index++;
-            setTimeout(typeNextLetter, 300); // скорость печати: 300мс на букву
+            setTimeout(typeNextLetter, 200); // скорость печати: 300мс на букву
           } else {
             // Убираем мигающий курсор, когда текст напечатан
             textElem.style.borderRight = "none";
+            setTimeout(() => {
+                window.location.href = '/testapp/regist.html';
+            }, 800);
           }
         }
         typeNextLetter();
@@ -160,6 +163,7 @@ img {
     </script>
 </body>
 </html>
+
 
 
 
