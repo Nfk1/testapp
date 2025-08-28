@@ -133,7 +133,7 @@ img {
       <img id="logo" src="logo-welcom.png" alt="логотип" />
       <div id="text"></div>
     </div>
-
+<button id="btnInstall" style="display:none;">Установить приложение</button>
     <script>
       let deferredPrompt;
 
@@ -163,7 +163,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
       const textElem = document.getElementById("text");
       const text = "VUKA";
       let index = 0;
-<button id="btnInstall" style="display:none;">Установить приложение</button>
 
       // Запускаем анимацию вращения
       logo.classList.add("rotate");
@@ -188,6 +187,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     </script>
 </body>
 </html>
+
 
 
 
