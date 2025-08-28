@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Push уведомления с OneSignal</title>
+
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#010d7a" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+
+
+  <script>
+    // Регистрируем service worker вручную (если он у вас есть)
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then(() => console.log("Service Worker зарегистрирован"))
+        .catch((err) => console.error("Ошибка регистрации service worker:", err));
+    }
+  </script>
+    <style>
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #010d7a;
+  box-sizing: border-box;
+}
+
+/* Для iOS safe area */
+@supports(padding: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    background-color: #010d7a;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Учитываем safe area сверху и снизу */
+  height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  gap: 20px;
+  background-color: #010d7a;
+  font-family: Arial, sans-serif;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+img {
+  width: 50vw;
+  height: auto;
+  max-width: 200px;
+  min-width: 50px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  img {
+    width: 50vw;
+    height: auto;
+    max-width: 100px; /* отменяем max-width 200px */
+    object-fit: contain;
+  }
+}
+
+/* Анимация вращения на 360 градусов за 2 секунды */
+.rotate {
+  animation: rotate360 2s forwards;
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Контейнер для текста, изначально пустой */
+#text {
+  white-space: nowrap;
+  min-width: 100px;
+  height: auto;
+  overflow: hidden;
+  border-right: 2px solid black; /* курсор-полоса */
+  animation: blink 0.7s steps(2) infinite;
+  font-size: clamp(
+    5rem,
+    10vw,
+    9rem
+  ); /* адаптивный размер от 3rem до 10rem, зависящий от ширины окна */
+  font-weight: bold;
+  line-height: 1;
+  max-height: 12rem;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes blink {
+  0%, 100% {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: black;
+  }
+}
+
+    </style>
+</head>
+<body>
+ <div class="welcome">
+      <img id="logo" src="logo-welcom.png" alt="логотип" />
+      <div id="text"></div>
+    </div>
+
+    <script>
+      const logo = document.getElementById("logo");
+      const textElem = document.getElementById("text");
+      const text = "VUKA";
+      let index = 0;
+
+      // Запускаем анимацию вращения
+      logo.classList.add("rotate");
+
+      // Когда анимация закончится - запускаем эффект печати
+      logo.addEventListener("animationend", () => {
+        function typeNextLetter() {
+          if (index < text.length) {
+            textElem.textContent += text[index];
+            index++;
+            setTimeout(typeNextLetter, 300); // скорость печати: 300мс на букву
+          } else {
+            // Убираем мигающий курсор, когда текст напечатан
+            textElem.style.borderRight = "none";
+          }
+        }
+        typeNextLetter();
+      });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
